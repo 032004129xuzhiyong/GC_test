@@ -1,0 +1,90 @@
+best_trial: 10
+best_trial_save_dir: best/
+config_paths:
+- config/3sources.yaml
+- config/BBCnews.yaml
+- config/BBCSports.yaml
+- config/COIL20.yaml
+- config/GRAZ02.yaml
+- config/MNIST.yaml
+- config/NGs.yaml
+- config/ORL2.yaml
+- config/ORL_v3.yaml
+- config/WebKB.yaml
+- config/YaleB.yaml
+- config/WebKB_wisconsin.yaml
+- config/WebKB_cornell.yaml
+- config/WebKB_texas.yaml
+- config/WebKB_washington.yaml
+dataset_args:
+  mat_path: data/COIL20.mat
+  topk: 8
+  train_ratio: 0.1
+device: cuda
+dfcallback_args:
+  df_save_path: ./tables/COIL20.csv
+earlystop_args:
+  checkpoint_dir: ./checkpoint/COIL20
+  monitor: val_metric_acc
+  patience: 100
+  restore_best_weights: true
+  save_best_only: true
+epochs: 1500
+loss_weights:
+- 0.66
+- 1.0e-06
+- 1.0e-06
+metric_acc:
+  mean: 0.9805555700000002
+  std: 0.00972222571431565
+metric_f1:
+  mean: 0.9808148028442147
+  std: 0.009420206922294859
+metric_precision:
+  mean: 0.9836058802308802
+  std: 0.008205134337398192
+metric_recall:
+  mean: 0.9808928571428572
+  std: 0.009314858111246337
+model_args:
+  alpha: 0.1
+  hid_dim: 64
+  lamda: 0.5
+  n_layer: 64
+model_class_args:
+  class_name: AttModel
+  module_path: models.model
+optimizer_args:
+  lr: 0.01
+optimizer_class_args:
+  class_name: Adam
+  module_path: torch.optim
+quiet: true
+scheduler_args:
+  factor: 0.3
+  min_lr: 1.0e-08
+  mode: min
+  patience: 10
+  verbose: false
+scheduler_class_args:
+  class_name: ReduceLROnPlateau
+  module_path: torch.optim.lr_scheduler
+scheduler_monitor: val_loss
+tbwriter_args:
+  log_dir: ./logs/COIL20
+tuner_flag: false
+tuner_monitor: val_metric_acc
+tuner_n_repeats: 5
+tuner_n_trials: 25
+val_metric_acc:
+  mean: 0.907947532
+  std: 0.0067359879057964775
+val_metric_f1:
+  mean: 0.9078489575325748
+  std: 0.005801265301789333
+val_metric_precision:
+  mean: 0.9235086534615938
+  std: 0.008229686108595997
+val_metric_recall:
+  mean: 0.907889423076923
+  std: 0.006763536739400584
