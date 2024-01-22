@@ -128,4 +128,3 @@ class GCNII_star_Layer(nn.Module):
 if __name__ == '__main__':
     gc = GCNIILayer(32, 32)
     # gc = GCNII_star_Layer(32,32)
-    print(gc(torch.rand(50,32), torch.ones(50,50),torch.rand(50,32), 0.1, 0.5).shape)

@@ -1,0 +1,1 @@
+pip install tabulate optuna scikit-learn "python-benedict[all]" -i https://mirrors.aliyun.com/pypi/simple

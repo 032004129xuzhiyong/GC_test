@@ -8,7 +8,7 @@ best_trial_save_dir: best/ #最优超参数实验数据存储目录
 
 #data
 dataset_args:
-  mat_path: F:/PycharmProjects/GCNII/data/animals.mat                   #
+  mat_path: data/animals.mat                   #
   topk:  #knn前几个节点
     type: int
     low: 6
