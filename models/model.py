@@ -123,7 +123,7 @@ class GC_Att(nn.Module):
         x, adj = Z0, torch.stack(adj_list).mean(0)  # [n,n]
         h0_s, adj0_s = torch.stack(h0s).permute(1,0,2), torch.stack(adj_list).permute(1,0,2)
         for i in range(self.n_layer):
-            Z0, att_w = self.att_layers[i](x, h0_s)
+            Z0, att_w = self.att_layers[i](h0_s, x)
             adj = (1-self.alpha) * adj + self.alpha * (adj0_s * att_w).sum(1)
             beta = math.log(self.lamda/(i+1)+1)
             x = F.relu(self.gc_layers[i](x, adj, Z0, self.alpha, beta))
@@ -134,18 +134,19 @@ class GC_Att(nn.Module):
 
 class AttModel(nn.Module):
     def __init__(self,n_view, n_feats, n_class,
-                 n_layer, hid_dim, alpha, lamda, dropout=0.5):
+                 n_layer, hid_dim, alpha, lamda, num_heads=8, dropout=0.5):
         super().__init__()
         self.n_view = n_view
         self.n_layer = n_layer
         self.alpha = alpha
         self.lamda = lamda
+        self.num_heads = num_heads
         self.dropout = dropout
 
         self.proj_layers = nn.ModuleList([
             nn.Linear(n_feats[i], hid_dim) for i in range(n_view)
         ])
-        self.self_att = nn.MultiheadAttention(hid_dim, num_heads=8)
+        self.self_att = nn.MultiheadAttention(hid_dim, num_heads=num_heads)
         self.agg_att = AggAttention(hid_dim, att_channel=hid_dim)
         self.cross_att_layers = nn.ModuleList([
             CrossAttention(hid_dim, hid_dim, att_channel=hid_dim) for _ in range(n_layer)
@@ -164,14 +165,19 @@ class AttModel(nn.Module):
             h0s.append(F.dropout(F.relu(layer(x_list[i])), 0.1, training=self.training))
         h0_s = torch.stack(h0s).permute(1,0,2)  # [node, view, hid]
         adj0_s = torch.stack(adj_list).permute(1,0,2)  # [node, view, node]
+        adj_mask = torch.stack(adj_list).repeat(self.num_heads,1,1)==0  # [view, node, node]
 
         # self attention
         # [node, view, hid] [view, node, node]
-        attn_o, attn_w = self.self_att(h0_s, h0_s, h0_s)
+        attn_o, attn_w = self.self_att(h0_s, h0_s, h0_s,attn_mask=adj_mask)
+        attn_o = F.relu(attn_o)
+        attn_o = F.dropout(attn_o, self.dropout, training=self.training)
 
         # agg attention
         # [node, hid] [1, view, 1]
         agg_z, agg_w = self.agg_att(attn_o)
+        agg_z = F.relu(agg_z)
+        agg_z = F.dropout(agg_z, self.dropout, training=self.training)
         agg_adj = (adj0_s * agg_w).sum(1)  # [node, node]
 
         # forward

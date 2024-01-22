@@ -24,7 +24,7 @@ class GCNIILayer(nn.Module):
 
     def forward(self, x, adj, h0, alpha, beta):
         assert x.size(-1) == h0.size(-1)
-        left = (1 - alpha) * torch.sparse.mm(adj,x) + alpha * h0
+        left = (1 - alpha) * torch.mm(adj,x) + alpha * h0
         right = (1-beta) * torch.eye(self.out_channel,device=x.device) + beta * self.weight
         return left @ right
 
@@ -86,13 +86,13 @@ class CrossAttention(nn.Module):
 
 
 class Attention(nn.Module):
-    def __init__(self, U_in_channel, S_in_channel, att_channel):
+    def __init__(self,S_in_channel, U_in_channel, att_channel):
         super().__init__()
-        self.Z_linear = nn.Linear(U_in_channel, att_channel)
         self.h0_z_linear = nn.Linear(S_in_channel, att_channel)
+        self.Z_linear = nn.Linear(U_in_channel, att_channel)
         self.f1 = nn.Linear(att_channel, 1)
 
-    def forward(self, Z, h0_z):
+    def forward(self, h0_z, Z):
         # Z: [n_node, hid_dim]
         # h0_z: [n_node, n_view, hid_dim]
         att1 = self.Z_linear(Z)
@@ -118,7 +118,7 @@ class GCNII_star_Layer(nn.Module):
         self.weight2.data.uniform_(-stdv, stdv)
 
     def forward(self, x, adj, h0, alpha, beta):
-        left = (1-alpha) * torch.sparse.mm(adj,x) @ \
+        left = (1-alpha) * torch.mm(adj,x) @ \
                ((1-beta)*torch.eye(self.out_channel,device=x.device) + beta * self.weight1)
         right = alpha * h0 @ \
                 ((1-beta)*torch.eye(self.out_channel,device=x.device) + beta * self.weight2)
