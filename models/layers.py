@@ -86,13 +86,13 @@ class CrossAttention(nn.Module):
 
 
 class Attention(nn.Module):
-    def __init__(self, U_in_channel, S_in_channel, att_channel):
+    def __init__(self,S_in_channel, U_in_channel, att_channel):
         super().__init__()
-        self.Z_linear = nn.Linear(U_in_channel, att_channel)
         self.h0_z_linear = nn.Linear(S_in_channel, att_channel)
+        self.Z_linear = nn.Linear(U_in_channel, att_channel)
         self.f1 = nn.Linear(att_channel, 1)
 
-    def forward(self, Z, h0_z):
+    def forward(self, h0_z, Z):
         # Z: [n_node, hid_dim]
         # h0_z: [n_node, n_view, hid_dim]
         att1 = self.Z_linear(Z)

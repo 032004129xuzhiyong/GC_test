@@ -1,0 +1,76 @@
+best_trial: 10
+best_trial_save_dir: best/
+config_paths:
+- config/NUS_v2.yaml
+dataset_args:
+  mat_path: data/NUS_v2.mat
+  topk: 7
+  train_ratio: 0.1
+device: cuda
+dfcallback_args:
+  df_save_path: ./tables/NUS_v2.csv
+earlystop_args:
+  checkpoint_dir: ./checkpoint/NUS_v2
+  monitor: val_metric_acc
+  patience: 100
+  restore_best_weights: true
+  save_best_only: true
+epochs: 1500
+loss_weights:
+- 0.66
+- 1.0e-06
+- 1.0e-06
+metric_acc:
+  mean: 0.873333334
+  std: 0.020682779122313897
+metric_f1:
+  mean: 0.8713556027548919
+  std: 0.021355516387678623
+metric_precision:
+  mean: 0.8784826643383699
+  std: 0.021809866299530502
+metric_recall:
+  mean: 0.8714606227106227
+  std: 0.02220555346553914
+model_args:
+  alpha: 0.1
+  hid_dim: 56
+  lamda: 0.5
+  n_layer: 22
+model_class_args:
+  class_name: AttModel
+  module_path: models.model
+optimizer_args:
+  lr: 0.01
+optimizer_class_args:
+  class_name: Adam
+  module_path: torch.optim
+quiet: true
+scheduler_args:
+  factor: 0.3
+  min_lr: 1.0e-08
+  mode: min
+  patience: 10
+  verbose: false
+scheduler_class_args:
+  class_name: ReduceLROnPlateau
+  module_path: torch.optim.lr_scheduler
+scheduler_monitor: val_loss
+tbwriter_args:
+  log_dir: ./logs/NUS_v2
+tuner_flag: false
+tuner_monitor: val_metric_acc
+tuner_n_repeats: 5
+tuner_n_trials: 25
+val_metric_acc:
+  mean: 0.344537038
+  std: 0.0044347877375536275
+val_metric_f1:
+  mean: 0.3335205966090078
+  std: 0.0038636476818108565
+val_metric_precision:
+  mean: 0.3498984371771602
+  std: 0.01109758939978006
+val_metric_recall:
+  mean: 0.3456042210914048
+  std: 0.004457406140841703

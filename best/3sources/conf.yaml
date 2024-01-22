@@ -4,7 +4,6 @@ config_paths:
 - config/3sources.yaml
 - config/BBCnews.yaml
 - config/BBCSports.yaml
-- config/COIL20.yaml
 - config/GRAZ02.yaml
 - config/MNIST.yaml
 - config/NGs.yaml
@@ -18,7 +17,7 @@ config_paths:
 - config/WebKB_washington.yaml
 dataset_args:
   mat_path: data/3sources.mat
-  topk: 9
+  topk: 99
   train_ratio: 0.1
 device: cuda
 dfcallback_args:
@@ -48,9 +47,9 @@ metric_recall:
   std: 0.0
 model_args:
   alpha: 0.1
-  hid_dim: 128
+  hid_dim: 64
   lamda: 0.5
-  n_layer: 22
+  n_layer: 10
 model_class_args:
   class_name: AttModel
   module_path: models.model
@@ -77,14 +76,14 @@ tuner_monitor: val_metric_acc
 tuner_n_repeats: 5
 tuner_n_trials: 25
 val_metric_acc:
-  mean: 0.8171052660000001
-  std: 0.04261615412310695
+  mean: 0.451973687
+  std: 0.047354714032149116
 val_metric_f1:
-  mean: 0.6554341408875974
-  std: 0.07383245379740894
+  mean: 0.4310979119458559
+  std: 0.0912311106919591
 val_metric_precision:
-  mean: 0.7293052875127877
-  std: 0.028828228607462886
+  mean: 0.5840847882349767
+  std: 0.06407284074440701
 val_metric_recall:
-  mean: 0.6846265771265772
-  std: 0.07985021574352918
+  mean: 0.5068198005698006
+  std: 0.09533464703762694

@@ -4,7 +4,6 @@ config_paths:
 - config/3sources.yaml
 - config/BBCnews.yaml
 - config/BBCSports.yaml
-- config/COIL20.yaml
 - config/GRAZ02.yaml
 - config/MNIST.yaml
 - config/NGs.yaml
@@ -35,22 +34,23 @@ loss_weights:
 - 1.0e-06
 - 1.0e-06
 metric_acc:
-  mean: 0.9949999999999999
-  std: 0.007071067811865481
+  mean: 0.9719999999999999
+  std: 0.014177446878757837
 metric_f1:
-  mean: 0.9951789428193285
-  std: 0.00682587820814152
+  mean: 0.9719029918193058
+  std: 0.014136856622023844
 metric_precision:
-  mean: 0.9953246753246754
-  std: 0.0066427298387240485
+  mean: 0.9737182795592407
+  std: 0.01298970538250119
 metric_recall:
-  mean: 0.9952380952380953
-  std: 0.006734350297014722
+  mean: 0.9717916666666666
+  std: 0.014243550127622465
 model_args:
   alpha: 0.1
-  hid_dim: 88
+  hid_dim: 32
   lamda: 0.5
   n_layer: 6
+  num_heads: 1
 model_class_args:
   class_name: AttModel
   module_path: models.model
@@ -77,14 +77,14 @@ tuner_monitor: val_metric_acc
 tuner_n_repeats: 5
 tuner_n_trials: 25
 val_metric_acc:
-  mean: 0.9299999999999999
-  std: 0.0119205147685123
+  mean: 0.9293889080000002
+  std: 0.005428826535832227
 val_metric_f1:
-  mean: 0.9175270507817714
-  std: 0.014331067108962958
+  mean: 0.9158879305083403
+  std: 0.0049176144337665035
 val_metric_precision:
-  mean: 0.9172817400133313
-  std: 0.013680255237905746
+  mean: 0.913728967619846
+  std: 0.005182276744370076
 val_metric_recall:
-  mean: 0.9219444333849932
-  std: 0.012697094771028972
+  mean: 0.9210275337352749
+  std: 0.004822296367156183

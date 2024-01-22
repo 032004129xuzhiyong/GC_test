@@ -25,9 +25,9 @@ from typing import *
 def bind_boolind_for_fn(func, train_bool_ind, val_bool_ind):
     def binded_func(scores, labels):
         if scores.requires_grad == True:
-            return func(scores[train_bool_ind], labels[train_bool_ind])
+            return func(scores[train_bool_ind], labels[train_bool_ind].long())
         else:
-            return func(scores[val_bool_ind], labels[val_bool_ind])
+            return func(scores[val_bool_ind], labels[val_bool_ind].long())
     tool.set_func_name(binded_func, tool.get_func_name(func))
     return binded_func
 

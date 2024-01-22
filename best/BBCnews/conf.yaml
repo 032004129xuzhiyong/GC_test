@@ -2,11 +2,9 @@ best_trial: 10
 best_trial_save_dir: best/
 config_paths:
 - config/BBCnews.yaml
-- config/BBCSports.yaml
-- config/NGs.yaml
 dataset_args:
   mat_path: data/BBCnews.mat
-  topk: 16
+  topk: 30
   train_ratio: 0.1
 device: cuda
 dfcallback_args:
@@ -36,9 +34,9 @@ metric_recall:
   std: 0.0
 model_args:
   alpha: 0.1
-  hid_dim: 88
+  hid_dim: 32
   lamda: 0.5
-  n_layer: 10
+  n_layer: 1
 model_class_args:
   class_name: AttModel
   module_path: models.model
@@ -65,14 +63,14 @@ tuner_monitor: val_metric_acc
 tuner_n_repeats: 5
 tuner_n_trials: 25
 val_metric_acc:
-  mean: 0.8931928699999998
-  std: 0.02055792691759994
+  mean: 0.8799027620000001
+  std: 0.019669869403857145
 val_metric_f1:
-  mean: 0.8923618408465688
-  std: 0.022162102720360878
+  mean: 0.8736336363489132
+  std: 0.019631854933144146
 val_metric_precision:
-  mean: 0.9012070379700031
-  std: 0.022802200812321996
+  mean: 0.898650167588181
+  std: 0.014791081968031965
 val_metric_recall:
-  mean: 0.8962903200856965
-  std: 0.01853044555264918
+  mean: 0.8726045154792652
+  std: 0.016262383113006366
