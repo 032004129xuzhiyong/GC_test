@@ -24,7 +24,7 @@ class GCNIILayer(nn.Module):
 
     def forward(self, x, adj, h0, alpha, beta):
         assert x.size(-1) == h0.size(-1)
-        left = (1 - alpha) * torch.sparse.mm(adj,x) + alpha * h0
+        left = (1 - alpha) * torch.mm(adj,x) + alpha * h0
         right = (1-beta) * torch.eye(self.out_channel,device=x.device) + beta * self.weight
         return left @ right
 
@@ -118,7 +118,7 @@ class GCNII_star_Layer(nn.Module):
         self.weight2.data.uniform_(-stdv, stdv)
 
     def forward(self, x, adj, h0, alpha, beta):
-        left = (1-alpha) * torch.sparse.mm(adj,x) @ \
+        left = (1-alpha) * torch.mm(adj,x) @ \
                ((1-beta)*torch.eye(self.out_channel,device=x.device) + beta * self.weight1)
         right = alpha * h0 @ \
                 ((1-beta)*torch.eye(self.out_channel,device=x.device) + beta * self.weight2)
