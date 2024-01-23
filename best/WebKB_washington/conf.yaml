@@ -2,23 +2,26 @@ best_trial: 10
 best_trial_save_dir: best/
 config_paths:
 - config/3sources.yaml
+- config/100leaves.yaml
 - config/BBCnews.yaml
 - config/BBCSports.yaml
 - config/COIL20.yaml
 - config/GRAZ02.yaml
 - config/MNIST.yaml
 - config/NGs.yaml
+- config/NUS_v2.yaml
 - config/ORL2.yaml
 - config/ORL_v3.yaml
 - config/WebKB.yaml
-- config/YaleB.yaml
 - config/WebKB_wisconsin.yaml
 - config/WebKB_cornell.yaml
 - config/WebKB_texas.yaml
 - config/WebKB_washington.yaml
+- config/YaleB.yaml
+- config/YaleB_F10.yaml
 dataset_args:
   mat_path: data/WebKB_washington.mat
-  topk: 13
+  topk: 100
   train_ratio: 0.1
 device: cuda
 dfcallback_args:
@@ -50,7 +53,7 @@ model_args:
   alpha: 0.1
   hid_dim: 56
   lamda: 0.5
-  n_layer: 12
+  n_layer: 9
 model_class_args:
   class_name: AttModel
   module_path: models.model
@@ -77,14 +80,14 @@ tuner_monitor: val_metric_acc
 tuner_n_repeats: 5
 tuner_n_trials: 25
 val_metric_acc:
-  mean: 0.706763305
-  std: 0.04396135060439735
+  mean: 0.47246378099999997
+  std: 0.07960908192397342
 val_metric_f1:
-  mean: 0.45222934542056337
-  std: 0.024305935160052278
+  mean: 0.3941333545068778
+  std: 0.05862108517889314
 val_metric_precision:
-  mean: 0.5044107496050956
-  std: 0.017617760622470353
+  mean: 0.4523550454173716
+  std: 0.08412348471925035
 val_metric_recall:
-  mean: 0.5284755705560913
-  std: 0.02942752021513933
+  mean: 0.5349379513928694
+  std: 0.04530539573486028
