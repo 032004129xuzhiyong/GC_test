@@ -101,6 +101,19 @@ class Attention(nn.Module):
         att_w = F.softmax(att,dim=1)
         return (h0_z * att_w).sum(1), att_w  # [n_node, hid_dim]
 
+class NodeAttention(nn.Module):
+    def __init__(self, in_channel, att_channel):
+        super().__init__()
+        self.left_hid = nn.Linear(in_channel, att_channel)
+        self.right_hid = nn.Linear(in_channel, att_channel)
+    def forward(self, h0_z):
+        # h0_z: [n_node, n_view, hid_dim]
+        origin = h0_z.permute(1,0,2)  # [n_view, n_node, hid_dim]
+        left = self.left_hid(h0_z).permute(1,0,2)  # [n_view, n_node, att_channel]
+        right = self.right_hid(h0_z).permute(1,2,0)  # [n_view, att_channel, n_node]
+        att = F.softmax(left@right, dim=2)  # [n_view, n_node, n_node]
+        out = torch.einsum('ijk,ikl->ijl',att,origin)  # [n_view, n_node, hid_dim]
+        return out.permute(1,0,2)  # [n_node, n_view, hid_dim]
 
 class GCNII_star_Layer(nn.Module):
     def __init__(self, in_channel, out_channel):

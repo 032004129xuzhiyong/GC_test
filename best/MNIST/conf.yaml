@@ -19,6 +19,9 @@ config_paths:
 - config/WebKB_washington.yaml
 - config/YaleB.yaml
 - config/YaleB_F10.yaml
+- config/Youtube.yaml
+- config/HW.yaml
+- config/animals.yaml
 dataset_args:
   mat_path: data/MNIST.mat
   topk: 6
@@ -38,22 +41,22 @@ loss_weights:
 - 1.0e-06
 - 1.0e-06
 metric_acc:
-  mean: 0.8344999999999999
-  std: 0.013499999999999988
+  mean: 0.9959999999999999
+  std: 0.006244997998398403
 metric_f1:
-  mean: 0.8357089802824141
-  std: 0.014328803402635404
+  mean: 0.9961408812401439
+  std: 0.006004564892805991
 metric_precision:
-  mean: 0.8461305989604627
-  std: 0.01218369605662285
+  mean: 0.9962987012987015
+  std: 0.005809138315349966
 metric_recall:
-  mean: 0.8352535014005603
-  std: 0.014129436367920151
+  mean: 0.9961428571428572
+  std: 0.005975004625279266
 model_args:
   alpha: 0.1
-  hid_dim: 16
+  hid_dim: 56
   lamda: 0.5
-  n_layer: 25
+  n_layer: 3
 model_class_args:
   class_name: AttModel
   module_path: models.model
@@ -80,14 +83,14 @@ tuner_monitor: val_metric_acc
 tuner_n_repeats: 5
 tuner_n_trials: 25
 val_metric_acc:
-  mean: 0.930888886
-  std: 0.008735481264025704
+  mean: 0.925944449
+  std: 0.008570874635225326
 val_metric_f1:
-  mean: 0.913937749907644
-  std: 0.008984109357342082
+  mean: 0.9106109645785578
+  std: 0.009193293746752507
 val_metric_precision:
-  mean: 0.9089567564395301
-  std: 0.00882869524102446
+  mean: 0.9087612799987557
+  std: 0.009302392078888232
 val_metric_recall:
-  mean: 0.9241594380037732
-  std: 0.008166996882695822
+  mean: 0.9176306720380796
+  std: 0.00804894817492521

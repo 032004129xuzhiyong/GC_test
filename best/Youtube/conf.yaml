@@ -1,0 +1,76 @@
+best_trial: 10
+best_trial_save_dir: best/
+config_paths:
+- config/Youtube.yaml
+dataset_args:
+  mat_path: data/Youtube.mat
+  topk: 9
+  train_ratio: 0.1
+device: cuda
+dfcallback_args:
+  df_save_path: ./tables/Youtube.csv
+earlystop_args:
+  checkpoint_dir: ./checkpoint/Youtube
+  monitor: val_metric_acc
+  patience: 100
+  restore_best_weights: true
+  save_best_only: true
+epochs: 1500
+loss_weights:
+- 0.66
+- 1.0e-06
+- 1.0e-06
+metric_acc:
+  mean: 0.5815
+  std: 0.11137885795787278
+metric_f1:
+  mean: 0.5677428678106919
+  std: 0.12146945722137799
+metric_precision:
+  mean: 0.5828801018821816
+  std: 0.10960867268603745
+metric_recall:
+  mean: 0.5814047619047619
+  std: 0.11175054025954112
+model_args:
+  alpha: 0.1
+  hid_dim: 40
+  lamda: 0.5
+  n_layer: 1
+model_class_args:
+  class_name: AttModel
+  module_path: models.model
+optimizer_args:
+  lr: 0.01
+optimizer_class_args:
+  class_name: Adam
+  module_path: torch.optim
+quiet: true
+scheduler_args:
+  factor: 0.3
+  min_lr: 1.0e-08
+  mode: min
+  patience: 10
+  verbose: false
+scheduler_class_args:
+  class_name: ReduceLROnPlateau
+  module_path: torch.optim.lr_scheduler
+scheduler_monitor: val_loss
+tbwriter_args:
+  log_dir: ./logs/Youtube
+tuner_flag: false
+tuner_monitor: val_metric_acc
+tuner_n_repeats: 5
+tuner_n_trials: 25
+val_metric_acc:
+  mean: 0.443555555
+  std: 0.07286390033378673
+val_metric_f1:
+  mean: 0.4279388118838178
+  std: 0.08203254338899142
+val_metric_precision:
+  mean: 0.43134771573759567
+  std: 0.08223601150563958
+val_metric_recall:
+  mean: 0.4439847785604404
+  std: 0.07297391495884689

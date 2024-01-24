@@ -19,9 +19,12 @@ config_paths:
 - config/WebKB_washington.yaml
 - config/YaleB.yaml
 - config/YaleB_F10.yaml
+- config/Youtube.yaml
+- config/HW.yaml
+- config/animals.yaml
 dataset_args:
   mat_path: data/BBCnews.mat
-  topk: 16
+  topk: 70
   train_ratio: 0.1
 device: cuda
 dfcallback_args:
@@ -51,9 +54,9 @@ metric_recall:
   std: 0.0
 model_args:
   alpha: 0.1
-  hid_dim: 56
+  hid_dim: 32
   lamda: 0.5
-  n_layer: 6
+  n_layer: 1
 model_class_args:
   class_name: AttModel
   module_path: models.model
@@ -80,14 +83,14 @@ tuner_monitor: val_metric_acc
 tuner_n_repeats: 5
 tuner_n_trials: 25
 val_metric_acc:
-  mean: 0.8753646719999999
-  std: 0.026861889834077515
+  mean: 0.8220421479999999
+  std: 0.023751528962002354
 val_metric_f1:
-  mean: 0.8803851997968566
-  std: 0.023539594337235424
+  mean: 0.8084148994011098
+  std: 0.02156464656381331
 val_metric_precision:
-  mean: 0.8839718019915797
-  std: 0.013521652475783843
+  mean: 0.8385025425427797
+  std: 0.021547741685209093
 val_metric_recall:
-  mean: 0.8962613113357213
-  std: 0.019059916164217497
+  mean: 0.8243751876578053
+  std: 0.021350052889835353

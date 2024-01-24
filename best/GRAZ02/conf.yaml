@@ -19,9 +19,12 @@ config_paths:
 - config/WebKB_washington.yaml
 - config/YaleB.yaml
 - config/YaleB_F10.yaml
+- config/Youtube.yaml
+- config/HW.yaml
+- config/animals.yaml
 dataset_args:
   mat_path: data/GRAZ02.mat
-  topk: 34
+  topk: 10
   train_ratio: 0.1
 device: cuda
 dfcallback_args:
@@ -38,22 +41,22 @@ loss_weights:
 - 1.0e-06
 - 1.0e-06
 metric_acc:
-  mean: 0.303401359
-  std: 0.02218980688021707
+  mean: 0.29183673599999993
+  std: 0.030943037184574557
 metric_f1:
-  mean: 0.22446587115548372
-  std: 0.049152648194306314
+  mean: 0.22860285050353574
+  std: 0.04865619450651643
 metric_precision:
-  mean: 0.3324961871077489
-  std: 0.12143143222584148
+  mean: 0.3828801218688627
+  std: 0.1149791177813731
 metric_recall:
-  mean: 0.3031106183582964
-  std: 0.02462682353085202
+  mean: 0.2928115615615615
+  std: 0.03047766619095461
 model_args:
   alpha: 0.1
-  hid_dim: 24
+  hid_dim: 48
   lamda: 0.5
-  n_layer: 28
+  n_layer: 7
 model_class_args:
   class_name: AttModel
   module_path: models.model
@@ -80,14 +83,14 @@ tuner_monitor: val_metric_acc
 tuner_n_repeats: 5
 tuner_n_trials: 25
 val_metric_acc:
-  mean: 0.246651613
-  std: 0.03315168790250025
+  mean: 0.25161775999999997
+  std: 0.026236941986489203
 val_metric_f1:
-  mean: 0.10678721744741422
-  std: 0.0299240526631885
+  mean: 0.11432113553753738
+  std: 0.026197923861406174
 val_metric_precision:
-  mean: 0.09860580250003684
-  std: 0.08241195280956629
+  mean: 0.11439541439620297
+  std: 0.09507604665064404
 val_metric_recall:
-  mean: 0.25374960747560793
-  std: 0.00988857191751369
+  mean: 0.2518108393443265
+  std: 0.00397430656139503

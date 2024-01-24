@@ -19,9 +19,12 @@ config_paths:
 - config/WebKB_washington.yaml
 - config/YaleB.yaml
 - config/YaleB_F10.yaml
+- config/Youtube.yaml
+- config/HW.yaml
+- config/animals.yaml
 dataset_args:
   mat_path: data/3sources.mat
-  topk: 34
+  topk: 23
   train_ratio: 0.1
 device: cuda
 dfcallback_args:
@@ -80,14 +83,14 @@ tuner_monitor: val_metric_acc
 tuner_n_repeats: 5
 tuner_n_trials: 25
 val_metric_acc:
-  mean: 0.8132450410000001
-  std: 0.018448189832629348
+  mean: 0.52666667
+  std: 0.015491942852128635
 val_metric_f1:
-  mean: 0.6802503802703371
-  std: 0.02283175199014583
+  mean: 0.5346636288222377
+  std: 0.034614148268648934
 val_metric_precision:
-  mean: 0.7258937351136024
-  std: 0.032970908316223645
+  mean: 0.5799739532146606
+  std: 0.031187052105435726
 val_metric_recall:
-  mean: 0.6992458677569784
-  std: 0.03617000948682628
+  mean: 0.6386624949124948
+  std: 0.03894357448007723

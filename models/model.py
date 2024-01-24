@@ -134,7 +134,7 @@ class GC_Att(nn.Module):
 
 class AttModel(nn.Module):
     def __init__(self,n_view, n_feats, n_class,
-                 n_layer, hid_dim, alpha, lamda, num_heads=8, dropout=0.5):
+                 n_layer, hid_dim, alpha, lamda, num_heads=4, dropout=0.5):
         super().__init__()
         self.n_view = n_view
         self.n_layer = n_layer
@@ -146,7 +146,8 @@ class AttModel(nn.Module):
         self.proj_layers = nn.ModuleList([
             nn.Linear(n_feats[i], hid_dim) for i in range(n_view)
         ])
-        #self.self_att = nn.MultiheadAttention(hid_dim, num_heads=num_heads)
+        self.self_att = nn.MultiheadAttention(hid_dim, num_heads=num_heads)
+        #self.self_att = NodeAttention(hid_dim,hid_dim)
         self.agg_att = AggAttention(hid_dim, att_channel=hid_dim)
         self.cross_att_layers = nn.ModuleList([
             CrossAttention(hid_dim, hid_dim, att_channel=hid_dim) for _ in range(n_layer)
@@ -169,13 +170,14 @@ class AttModel(nn.Module):
 
         # # self attention
         # # [node, view, hid] [view, node, node]
-        # attn_o, attn_w = self.self_att(h0_s, h0_s, h0_s,attn_mask=adj_mask)
-        # attn_o = F.relu(attn_o)
-        # attn_o = F.dropout(attn_o, self.dropout, training=self.training)
+        attn_o, attn_w = self.self_att(h0_s, h0_s, h0_s,attn_mask=adj_mask)
+        #attn_o = self.self_att(h0_s)
+        attn_o = F.relu(attn_o)
+        attn_o = F.dropout(attn_o, self.dropout, training=self.training)
 
         # agg attention
         # [node, hid] [1, view, 1]
-        agg_z, agg_w = self.agg_att(h0_s)
+        agg_z, agg_w = self.agg_att(attn_o)
         agg_z = F.relu(agg_z)
         agg_z = F.dropout(agg_z, self.dropout, training=self.training)
         agg_adj = (adj0_s * agg_w).sum(1)  # [node, node]
@@ -183,12 +185,12 @@ class AttModel(nn.Module):
         # forward
         z, adj, z0 = agg_z, agg_adj, h0_s.mean(1)
         for i in range(self.n_layer):
-            # [node, hid] [1, view, 1]
-            z0, agg_w = self.cross_att_layers[i](h0_s, z)
-            adj = (1-self.alpha) * adj + self.alpha * (adj0_s * agg_w).sum(1)  # [node, node]
-
             beta = math.log(self.lamda/(i+1)+1)
             z = F.relu(self.gc_layers[i](z, adj, z0, self.alpha, beta))
             z = F.dropout(z, self.dropout, training=self.training)
+
+            # [node, hid] [1, view, 1]
+            z0, agg_w = self.cross_att_layers[i](h0_s, z)
+            adj = (1-self.alpha) * adj + self.alpha * (adj0_s * agg_w).sum(1)  # [node, node]
         out = self.output(z)
         return out

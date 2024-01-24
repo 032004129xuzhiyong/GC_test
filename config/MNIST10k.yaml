@@ -1,9 +1,9 @@
 #tuner
 tuner_monitor: val_metric_acc #调优监控指标
-tuner_n_trials: 25 #调优次数
-tuner_n_repeats: 5 #每次实验(每个配置)执行几遍，减少误差
+tuner_n_trials: 10 #调优次数
+tuner_n_repeats: 1 #每次实验(每个配置)执行几遍，减少误差
 tuner_flag: False
-best_trial: 10 #获得最优超参数后，使用超参数执行几次来获得实验数据
+best_trial: 5 #获得最优超参数后，使用超参数执行几次来获得实验数据
 best_trial_save_dir: best/ #最优超参数实验数据存储目录
 
 #data
@@ -33,7 +33,7 @@ model_args: #模型参数                            #
     step: 8
   alpha: 0.1 #h0
   lamda: 0.5
-
+  num_heads: 1
 
 optimizer_class_args: #import
   module_path: torch.optim
